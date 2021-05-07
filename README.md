@@ -3,18 +3,120 @@
 ## [05월 04일]
 
 >#### 객체와 반복문
-
+- 생성한 객체에 for in 반복문으로 반복을 적용할 수 있다.
+- 객체에 for in 반복문을 적용하면 키가 들어간다.
+```
+let object = {
+    name:'바나나',
+    price: 1200
+};
+for (let key in object) {
+    console.log(`${key}: ${object[key]}`);
+}
+```
 >#### 속성과 메소드
+- 배열 내부에 있는 값 하나하나를 요소라고 한다.
+- 객체 내부에 있는 값 하나하나를 속성이라고 한다.
+```
+var object = {
+    number: 273,
+    string: 'RintIanTta',
+    boolean: true,
+    array: [52,273, 103, 32],
+    method: function () {
 
->#### 생성자 함수와 프로토타입
+    }
+};
+```
+- 객체의 속성 중 자료형이 함수인 속성을 메소드라고 한다.
+    - object에는 name, price, print 속성이 있고, 이 중에 print속성은 자료형이 함수이므로 print() 메소드라고 한다.
+- 객체에 있는 속성을 메소드에서 사용하고 싶을 때는 자신이 가지고 있는 속성임을 표시해야 한다.
+    - 자신이 가지고 있는 속성이라는 것을 this 키워드를 사용해 표시한다.
 
+>#### 생성자 함수
+- 생성자 함수는 객체를 만드는 함수이다.
+- 일반적인 함수와 구분할 수 있게 생성자 함수는 대문자로 시작하는 이름을 사용한다.
+```
+function Product(name, price) {
+    this.name = name;
+    this.price = price;
+}
+```
+- 생성자 함수는 new 키워드와 함께 사용해 객체를 생성한다.
+```
+function Product(name, price) {
+    this.name = name;
+    this.price = price;
+}
+let product = new Product("바나나", 1200);
+console.log(product);
+```
+- 객체에는 이름이 있는데 반대로 이름이 없는 객체는 익명 객체라고 한다.
+- new 키워드를 사용하지 않으면 일반 함수 호출이 된다.
+
+>#### 프로토타입
+- 생성자 함수로 만든 객체는 프로토타입이라는 공간에 메소드를 지정해서 모든 객체가 공유하도록 만들 수 있다.
+- 프로토타입은 해당 함수를 생성자 함수로 사용했을 때만 의미가 있다.
 >#### 조금 더 나아가기
-
+- null 키워드는 변수처럼 활용할 수 있으며, 아예 값이 없는 상태를 구분할 때 사용한다.
 >#### 기본 자료형과 객체 자료형의 차이
-
+- 숫자, 문자열, 불을 기본 자료형이라고 한다.
+- 
+```
+let number = 273;
+let string = '안녕하세요';
+let boolean = true;
+console.log(typeof number);
+console.log(typeof string);
+console.log(typeof boolean);
+```
 >#### Number 객체
-
+- Number 객체는 자바스크립트에서 숫자를 표현할 때 사용한다.
+```
+let numberFromLiteral = 273;
+let numberFromConstructor = new Number(273);
+```
+>#### 메소드
+- Number 객체가 가지 메소드의 종류
+```
+toExponential()-숫자를 지수 표시로 나타낸 문자열을 리턴한다.
+toFixed()-숫자를 고정소수점 표시로 나타낸 문자열을 리턴한다.
+toPrecision()-숫자를 길이에 따라 지수 표시 또는 고정소수점 표시로 나타낸 문자열을 리턴한다.
+```
+- 위에 메소드는 모두 매개 변수로 숫자를 하나 입력받는다.
+>#### 생성자 함수의 속성
+- 자바스크립트의 함수는 객체의 일종이므로 속성과 메소드를 추가할 수 있다.
+- 자바스크립트가 너무 큰 수를 다룰 때는 부동소수점 형식으로 숫자를 다루어 작은 수는 무시한다.
+의미 있는 만큼을 더하려면 Infinity를 출력해야한다.
 >#### String 객체
+- String 객체는 자바스크립트에서 가장 많이 사용하는 내장 객체이다.
+```
+let stringFromLiteral = '안녕하세요';
+let stringFromConstructor = new String('안녕하세요');
+```
+>#### 속성과 메소드
+- String 객체는 length 속성을 가진다.
+    - lenth는 문자열의 길이를 나타낸다.
+- String 객체의 메소드는 모두 변경된 값을 리턴하는 것이다.
+```
+let string = 'asdffgh';
+string.toUpperCase();
+console.log(string);
+```
+- 자기 자신을 리턴하는 것 뿐이라 소문자 상태로 출력되고, 대문자로 변환하려면 리턴 값을 사용해야 한다.
+```
+let string = 'asdfghh';
+string = string.toUpperCase();
+console.log(string);
+```
+>#### 메소드 활용
+- 문자열 내부에 특정 문자열이 있는지 활인할 때는 indexOf() 메소드를 사용한다.
+```
+let foo = "안녕하세요. 좋은 날씨입니다.";
+if(foo.indexOf('아침') >= 0) {
+    console.log('좋은 아침입니다.');
+}
+```
 ## [04월 27일]
 >#### 익명 함수와 선언적 함수의 생성 순서
 - 이름이 있다 없다 보다 생성 순서가 더 중요하다.
