@@ -3,29 +3,148 @@
 ## [05월 11일]
 
 >#### Date 객체
+- Date 객체는 new Date(), new Date(<유닉스 타임>), new Date(<시간 문자열>), new Date(<년>,<월-1>,<일>,<시간>,<분>,<초>,<밀리초>)의 네가지 방식으로 생성된다.
+- Month를 나타내는 '월'은 0부터 시작된다.
+```
+let dateA = new Date();
+console.log(dateA);
 
+letdateB = new Date(682281800000);
+console.log(dateB);
+
+let dateC = new Date("December 9, 1991 21:30:00");
+console.log(dateC);
+
+let dateD = new Date(1991, 12 - 1, 9, 21, 30, 0, 0);
+console.log(dateD);
+```
 >#### 메소드 활용
+- Date 객체는 get○○() 형태의 메소드와 set○○() 형태의 메소드만 가진다.
+    - ○○에는 FullYear, Month, Day, Hours, Minutes, Deconds 등이 들어갈 수 있다.
 
+ 시간 더하기
+```
+let date = new Date();
+console.log(date);
+date.setFullYear(date.getFullYear() + 1);
+date.setMonth(date.getMonth() + 11);
+date.setDate(date.getDate() + 3);
+console.log(date); 
+```
+시간 간격 구하기
+```
+let now = new Date();
+let before = new Date('December 9, 1991');
+let interval = new.getTime() - before.getTime();
+interval = Math.floor(interval / (1000*60*60*24));
+console.log(`태어나고 ${interval}일 지났습니다.`)
+```
 >#### Array 객체
-
+- Array 객체는 자바스크립트에서 여러 자료를 다룰 때 사용하는 자료형이다.
 >#### Array 객체의 기본 메소드
-
->#### ECMAScript5에서 추가된 메소드
-
+Array 객체의 기본 메소드
+```
+concat()
+join()
+pop()
+push()
+reverse()
+slice()
+sort()
+splice()
+```
+- Array 객체는 대부분 파괴적 메소드 이므로 자기 자신을 변경한다.
 >#### 프로토타입에 메소드 추가
-
+- 프로토타입에 메소드를 추가하면 해당 자료형 전체에 추가할 수 있다.
+```
+String.prototype.contain = function (input) {
+    return this.indexOf(input) >= -1;
+};
+console.log('안녕하세요'.contain('안녕'));
+console.log('안녕하세요'.contain('데굴데굴'));
+```
 >#### underscore.js 라이브러리
-
+- 자바스크립트에서 괸장히 많은 기본 함수를 제공해도 부족함을 느낀다.
+- 그래서 많은 개발자들이 자주 사용하는 기능을 underscore.js 라이브러리에 정리해 두었다.
 >#### JSON 객체
-
+- json은 ECMAScript5에서 추가된 객체이다.
+- json은 자바스크립트 객체를 사용한 데이터 표현 방법이다.
+기본형태
+```
+let foo = [
+    {
+        // key: Value,
+        name: '고구마',
+        price: 1000
+    }, 
+    {
+        name: '감자',
+        price: 500
+    },
+    {
+        name: '바나나',
+        price: 1500
+    },
+]; //json 형태
+let bar = [
+    {
+        name: '바나나',
+        price: 1500
+    }
+];
+```
+제약
+```
+- 문자열은 큰따옴표로 만들어야 한다.
+- 모든 키는 큰따옴표로 감싸야 한다.
+- 숫자, 문자열, 불 자료형만 사용할 수 있다.
+```
 >#### 예외와 기본 예외 처리
-
+- 프로그램을 실행하는 동안 문제가 발생하여 프로그램이 자동 중단되어 발생한 오류를 예외라고 한다.
+    - 이러한 오류에 대처할 수 있게 하는 것을 예외 처리라고 한다.
+- 예외가 발생하지 않게 사전에 해결하는 것을 예외 처리라고 한다.
+기본 예외 처리
+```
+function callTherrTimes(collback) {
+    for (let i=0; i<3; i++) {
+        callback();
+    }
+}
+callTherrTimes(function () {console.log('안녕하세요');});
+console.log('=========================================')
+callTherrTimes();
+```
 >#### 고급 예외 처리
-
+- 고급 예외 처리는 try 키워드, catch 키워드, finally키워드로 예외를 처리하는 방법이다.
+    - 이를 try catch finally 구문이라고 한다.
+기본형태
+```
+try {
+    //예외 발생
+} catch (exception) {
+    //처리
+}finally {
+    //무조건 실행
+}
+```
 >#### 예외 객체
+- 예외가 발생하면 어떤 예외가 발생했는지 정보를 함께 전달받을 수 있게 하는것이 예외 객체이다.
+- 예외 객체는 catch 구문의 괄호 안에 들어 있는 변수를 나타낸다.
+```
+try {
 
+} catch (exception) {
+
+}
+```
+- 예외 겍체에는 name 속성과 message 속성이 있다.
+    - 어떤 예외인지 코드 내부에서 확인 할 수 있다.
 >#### 예외 강제 발생
-
+- 예외를 강제로 발생시킬 때는 throw 키워드를 사용한다.
+- throw 키워드 뒤에는 문자열 또는 Error 객체를 입력한다.
+```
+throw '강제 예외';
+```
 ## [05월 04일]
 
 >#### 객체와 반복문
