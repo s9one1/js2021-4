@@ -1,4 +1,75 @@
 # 김민정 [202030302]
+## [05월 18일]
+>### 전역 변수
+- 자바스크립트에서 아무런 변수를 선언하지 않고 모든 곳에서 사용할 수 있는 것들을 전역○○이라고 한다.
+- 아무런 제약 없이 사용할 수 있는 것이 변수라면 전역 변수, 함수라면 전역 함수, 객체라면 전역 객체라고 칭한다.
+>
+|변수|설명|
+|:---:|:---:|
+|__filename|현재 실행 중인 파일 경로를 나타낸다.|
+|__dirname|현재 실행 중인 코드의 폴더 경로를 나타낸다.|
+```
+console.log(__fillename);
+console.log(__dirname);
+```
+>### process 객체의 속성과 이벤트
+- node.js는 process 객체라는 전역 객체를 제공한다.
+- process 객체는 프로세스 정보를 제공하며, 제어할 수 있게 하는 객체이다.
+```
+console.log('- process.env: ', process.env);
+console.log('- process.version: ', process.env);
+console.log('- process.version: ', process.env);
+console.log('- process.arch: ', process.arch);
+console.log('- process.platform: ', process.platform);
+```
+>### process 객체와 이벤트 개요
+- 자바스크립트는 이벤트를 많이 활용한다.
+    - 서버 자바스크립트와 클라이언트 자바 스크립트에서 많이 사용한다.
+```
+process.on('exit', () => {
+    console.log('프로세스 종료됨');
+})
+
+process.on('uncaughtException', () => {
+    console.log('예외 발생됨');
+})
+
+error.error.error();
+```
+>### os 모듈
+- os 모듈은 애플리케이션을 만들 때 많이 활용하지는 않지만, 모듈의 시본 사용법을 익히기에 가장 적당하다.
+```
+const foo = require('os');//모듈을 사용할때는 모듈 이름을 사용하는 것이 좋음 하지만 아니어도 됨으로 foo를 씀
+console.log(foo.hostname());
+console.log(foo.freemem());
+console.log(foo.cpus());
+```
+- require() 함수의 매개 변수로 문자열 os를 입력해 모듈을 추출하고 사용한다는 점을 기억해야 한다.
+    - os 모듈 정보를 Node.js 문서에서 찾는다.
+>### url 모듈
+```
+const foo = require('url');
+// const parseObject = foo.parse('http://naver.com');
+console.log(foo.parse('https://naver.com'));
+// console.log(parseObject);
+```
+>### File System 모듈
+
+>### 파일 읽기
+
+>### 비동기 처리의 장점
+
+>### 파일 쓰기
+
+>### 파일 처리와 예외 처리
+
+>### 노드 패키지 매니저
+
+>### request 모듈
+
+>### cheerio 모듈
+
+>### async 모듈
 
 ## [05월 11일]
 
