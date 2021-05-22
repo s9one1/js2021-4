@@ -51,6 +51,23 @@ console.log(file);
 console.log(file.toString());
 }); */
 
+
+/* const fs = require('fs');
+const a = fs.readFileSync('a.txt');
+const b = fs.readFileSync('b.txt');
+const c = fs.readFileSync('c.txt');
+console.log(a,b,c); */
+
+/* const fs = require('fs');
+const async = require('async');
+async.parallel([
+    (callback) => { fs.readFile('a.txt', callback);},
+    (callback) => { fs.readFile('b.txt', callback);},
+    (callback) => { fs.readFile('c.txt', callback);},
+],(error, results) => {
+    console.log(results);
+}); */
+
 /* const fs = require('fs');
 fs.writeFileSync('test.txt', '안녕!');
 console.log('완료'); */
@@ -59,18 +76,50 @@ console.log('완료'); */
 fs.writeFile('test.txt', '잘자', (error) => {
     console.log('완료');
 }); */
+/* 
+const fs = require('fs');
+try {
+    const file = fs.readFileSync('none.txt');
+    console.log(file);
+    console.log(file.toString());
+}catch (exception) {
+    console.log('파일을 읽어 들이는데 문자 발생');
+    console.log(exception);
+} */
+
+
+/* const fs = require('fs');
+fs.readFile('none.txt', (error, file) => {
+    if (error) {
+        console.log('파일을 읽어 들이는데 문제 발생');
+        console.log(error);
+    }else {
+        console.log(file);
+        console.log(file.toString());
+    }
+}); */
+/* 
+const request = require('request');
+const url = 'http://www.hanbit.co.kr/store/books/new_book_list.html';
+request(url, (error, response, body) => {
+    console.log(body);
+}); */
 
 /* const request = require('request');
 request('htts://naver.com', (error, Response, body) => {
     console.log(body);
 }); */
 
-const request = require('request');
+/* const request = require('request');
 const cheerio = require('cheerio');
 
 const url = 'http://naver.com';
 request(url,(error, Response, body) => {
     const $ = cheerio.load(body);
     console.log($('strong.new').text());
-});//긁어오기
+});//긁어오기 */
+
+
+
+
 

@@ -54,23 +54,161 @@ console.log(foo.parse('https://naver.com'));
 // console.log(parseObject);
 ```
 >### File System 모듈
-
+- File System 모듈은 const fs = require('fs');를 사용해 추출할 수 있다.
+- 파일 이름 수정, 이동, 제거 등 메소드가 많다.
 >### 파일 읽기
+1. 파일을 읽으려면 파일이 있어야 한다.
+2. 실행할 자바 스크립트 파일이 있는 폴더에 textfile.txt 이름의 파일을 생성한다.
+3. textfile.txt 파일에는 간단한 문자열 'This is a textfile.txt'를 입력한다.
 
+동기적으로 파일 읽어 들이기
+```
+const fs = require('fs');
+const file = fs.readFileSync('test.txt');
+console.log(file);//16진수
+console.log(file.toString());
+```
+
+비동기적으로 파일 읽어 들이기
+```
+const fs = require('fs');
+fs.readFileSync('textfile.txt', (error, file)=> {
+console.log(file);
+console.log(file.toString());
+```
 >### 비동기 처리의 장점
+- 순차적으로 읽으 들이는 것이 아니라 병렬적으로 파일을 읽어 들이므로, 파일 하나는 읽어 들이는데 2초씩 걸려도 전체 처리는 2초만 걸린다.
+- 6초가 걸리는 처리를 2초로 단축시키는 데 드는 수고로 보면 코드는그리 길지 않다.
 
+여러 파일 동기적으로 읽기
+```
+const fs = require('fs');
+const a = fs.readFileSync('a.txt');
+const b = fs.readFileSync('b.txt');
+const c = fs.readFileSync('c.txt');
+console.log(a,b,c);
+```
+
+여러 파일을 비동기적으로 읽기
+```
+const fs = require('fs');
+const async = require('async');
+async.parallel([
+    (callback) => { fs.readFile('a.txt', callback);},
+    (callback) => { fs.readFile('b.txt', callback);},
+    (callback) => { fs.readFile('c.txt', callback);},
+],(error, results) => {
+    console.log(results);
+});
+```
 >### 파일 쓰기
+파일 쓰기 메소드
+|메소드|설명|
+|:---:|:---:|
+|fs.writeFileSync(<파일 이름>,<문자열>)|동기적으로 파일을 쓴다.|
+|fs.writeFile(<파일 이름>, <문자열>, <콜백 함수>)|비동기적으로 파일을 쓴다.|
 
+동기적으로 파일 쓰기
+```
+const fs = require('fs');
+fs.writeFileSync('test.txt', '안녕!');
+console.log('완료');
+```
+
+비동기적으로 파일 쓰기
+```
+const fs = require('fs');
+fs.writeFile('test.txt', '잘자', (error) => {
+    console.log('완료');
+});
+```
 >### 파일 처리와 예외 처리
+- 파일을 처리 할 때는 반드시 예외 처리를 해야 한다.
+    - 동기 코드를 예외 처리할 때는 try catch 구문을 활용한다.
+    - 비동기 코드를 예외 처리할 때는 콜백 함수로 전달된 첫 번째 매개 변수 error를 활용한다.
 
+동기 코드 예외 처리
+```
+const fs = require('fs');
+try {
+    const file = fs.readFileSync('none.txt');
+    console.log(file);
+    console.log(file.toString());
+}catch (exception) {
+    console.log('파일을 읽어 들이는데 문자 발생');
+    console.log(exception);
+}
+```
+- Node.js에서는 동기 처리를 사용할 이유가 없다.
+
+비동기 코드 예외 처리
+```
+const fs = require('fs');
+fs.readFile('none.txt', (error, file) => {
+    if (error) {
+        console.log('파일을 읽어 들이는데 문제 발생');
+        console.log(error);
+    }else {
+        console.log(file);
+        console.log(file.toString());
+    }
+});
+```
 >### 노드 패키지 매니저
-
+- 프로그래밍 플랫폼이 기본적으로 제공하는 모듈을 '내부 모듈'이라고 한다.
+- 개인 개발자가 내부 모듈을 조합해 사용하기 쉬운 형태로 만들거나 새로운 기능을 구현해서 제공하는 것을 '외부 모듈'이라고 한다.
+    - npm을 외부 모듈을 설치하는 용도로 쓸 수 있다.
+    ```
+    > npm install <모듈 이름>
+    ```
+    원하는 버전 설치
+    ```
+    npm install <모듈 이름>@<버전>
+    ```
 >### request 모듈
+- 웹 요청을 쉽게 만들어 주는 모듈이다.
+    - 외부 모듈이므로 npm을 설치해야 사용할 수 있다.
+```
+> npm install request
+```
+request 모듈 추출
+```
+const request = require('request');
+```
 
+request 모듈
+```
+const request = require('request');
+const url = 'http://www.hanbit.co.kr/store/books/new_book_list.html';
+request(url, (error, response, body) => {
+    console.log(body);
+});
+```
+- request 모듈로 가져온 웹 페이지는 단순한 HTML 문자열이다.
 >### cheerio 모듈
+- 가져온 웹 페이지의 특정 위치에서 손쉽게 데이터를 추출한다.
 
+cheerio 모듈 설치
+```
+> npm install cheerio
+```
+
+cheerio 모듈 추출
+```
+const cheerio = require('cheerio');
+```
 >### async 모듈
+- Node.js의 실행 순서 정의가 어려운것과 들여쓰기가 많은 문제를 해결해 줄 수 있다.
 
+async 모듈 설치
+```
+> npm install async
+```
+
+async 모듈 추출
+```
+const async = require('async');
+```
 ## [05월 11일]
 
 >#### Date 객체
