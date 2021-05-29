@@ -154,6 +154,41 @@
 </div>
 </details>
 
+#### [10. 05월 25일](#05월-25일)
+<details>
+<summary>0518</summary>
+<div markdown="1">
+- 요청과 응답<br>
+- express 모듈을 사용한 서버 생성과 실행<br>
+- 페이지 라우팅<br>
+- response 객체<br>
+- request 객체<br>
+- 미들웨어<br>
+- 정적 파일 제공<br>
+- morgan 미들웨어<br>
+- body-parser 미들웨어<br>
+</div>
+</details>
+
+## [05월 25일]
+>### 요청과 응답
+
+>### express 모듈을 사용한 서버 생성과 실행
+
+>### 페이지 라우팅
+
+>### response 객체
+
+>### request 객체
+
+>### 미들웨어
+
+>### 정적 파일 제공
+
+>### morgan 미들웨어
+
+>### body-parser 미들웨어
+
 ## [05월 18일]
 >### 전역 변수
 - 자바스크립트에서 아무런 변수를 선언하지 않고 모든 곳에서 사용할 수 있는 것들을 전역○○이라고 한다.
