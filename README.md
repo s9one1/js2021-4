@@ -172,23 +172,185 @@
 
 ## [05월 25일]
 >### 요청과 응답
-
+- 웹 서버가 하는 일은 요청과 응답의 연속이라고 정의할 수 있다.
+- 웹 브라우저에 웹 피이지 주소를 입력하면 웹 서버는 입력한 주소에 맞는 웹 페이지를 제공한다.
+- 요청하는 대상을 클라이언트, 응답하는 대상을 서버, 클라이언트가 서버로 보내는 편지를 요청 메시지, 서버가 클라이언트로 보내는 편지를 응답 메시지라고한다.
+- 웹은 클라이언트가 서버에 HTML 페이지나 파일을 요청하면 서버가 그 요청에 응답해 요청한 HTML 문서나 파일을 클라이언트에 제공하는 장소이다.
 >### express 모듈을 사용한 서버 생성과 실행
+- express 모듈을 사용해 서버를 생성할 때는 express(), app.use(), app.listen()의 메소드를 사용한다.
 
+express 모듈로 서버 생성과 실행
+```
+const express = require('express');
+const app = express();
+app.use((request, response) => {
+    response.send('<h1>Hello express</h1>');
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
 >### 페이지 라우팅
+- 클라이언트 요청에 적절한 페이지를 제공하는 기술이다.
+- 페이지 라우팅을 할 때는 토큰을 활용할 수 있다.
+    - 토근은 ':<토큰 이름>' 형태로 설정한다.
+    - 토큰은 다른 문자열로 변환해서 입력할 수 있다.
+    - request 객체의params 속성으로 전달된다.
 
+페이지 라우팅
+```
+const express = require('express');
+const app = express();
+app.get('/page/:id', (request, response) => {
+    const id = request.params.id;
+    response.send(`<h1>${id} Page</h1>`);
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
 >### response 객체
+- response 객체는 send(), status(), set() 처럼 여러가지 메소드가 있다.
+>###### 데이터 제공
+- 지금까지는 send() 메소드를 사용해 사용자에게 데이터 본문을 제공했다.
+    - send() 메소드를 가장 마지막에 실행해야 하며, 두 번 실행할 수 없다.
 
+response 객체의 기본 메소드
+```
+const express = require('express');
+const app = express();
+app.get('*', (request, response) => {
+    response.status(404);
+    response.set('methodA', 'ABCD');
+    response.set({
+        'methodB1': 'FGHIJ',
+        'methodB2': 'KLMON'
+    });
+    response.send('본문을 입력합니다.');
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
+>###### Contest-Type
+- 서버가 Contest-Type을 제공해 주면 웹 브라우저는 헤더를 확인하고, 제공된 데이터의 형태를 확인한다.
+    - 이때 형태를 MIME라는 문자열로 제공한다.
+
+그림과 음악 파일 제공
+```
+const { response } = require('express');
+const express = require('express');
+const fs = require('fs');
+const app = express();
+app.get('/image', (request, response) => {
+    fs.readFile('abc.jpg', (error, data) => {
+        response.type('image/jpg');
+        response.send(data);
+    });
+    
+});
+
+app.get('/audio', (request, response) => {
+    fs.readFile('audio.mp3', (error, data) => {
+        response.type('audio/mpeg');
+        response.send(data);
+    });
+});
+
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
+>###### HTTP 상태 코드
+- 404 Not Found 같은 숫자를 HTTP 상태 코드라고 한다.
+- 상태 코드는 서버가 클라이언트에 해당 경로는 이러한 상태라고 알려 주는 용도이다.
+상태 코드를 지정할 때는 status() 메소드를 사용한다.
+
+상태 코드
+```
+const express = require('express');
+const app = express();
+app.get('*', (request, response) => {
+    response.status(404);
+    response.send('없음');
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
+>###### 리다이렉트
+- 3xx는 리다이렉트라고 하는 특수한 상태 코드이다.
+- 웹 브라우저가 리다이렉터를 확인하면 화면을 출력하지 않고, 응답 헤더는 Location 속성을 확인해서 해당 위치로 이동한다.
+
+리다이렉트
+```
+const express = require('express');
+const app = express();
+app.get('*', (request, response) => {
+    response.redirect('http://naver.com');
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
 >### request 객체
+- 제대로된 응답을 하려면 무엇을 요청했는지를 확실하게 알아야 한다.
+>###### 요청 매개 변수
+- 요청 매개 변수를 추출할 때는 query 객체를 사용한다.
+- 요청 매개 변수는 URL 뒤에 ? 기호를 삽입하고, <키>=<값>형태로 값을 &로 구분해서 입력한다.
 
+요청 매개 변수 추출
+```
+const express = require('express');
+const app = express();
+app.get('*', (request, response) => {
+    console.log(request.query);
+    response.send(request.query);
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
 >### 미들웨어
-
+- 코드를 조합하면 원하는 형태의 모든 서버를 만들어 낼 수 있는데, 자주 사용하는 내용중에 복잡하게 구현해야 하는 것을 express모듈이 쉽게 활용할 수 있도록 제공한 기능을 미들웨어라고 한다.
 >### 정적 파일 제공
+- 웹 페이지에서 변경되지 않는 요소를 쉽게 제공해주는 기능이다.
 
+정적 파일 제공
+```
+const express = require('express');
+const app = express();
+app.use(express.static('pub'));
+app.get('*', (request, response) => {
+    response.send(404);
+    response.send("파일 없음");
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
 >### morgan 미들웨어
+- express 모듈의 미들웨어로 사용할 수 있는 외부 모듈을 확인할 수 있다.
+- 이 중에서 비교적 사용이 간단한 morgan 미들웨어는 로그 출력 미들웨어이다.
+    - 로그는 관련된 정보를 가진 글자를 의미한다.
 
->### body-parser 미들웨어
+morgan 미들웨어
+```
+const express = require('express');
+const morgan = require('morgan');
 
+const app = express();
+app.use(express.static('public'));
+app.use(morgan('combined'));
+
+app.get('*', (request, response) => {
+    
+    response.send("명령 프롬포트 확인");
+});
+app.listen(52273, () => {
+    console.log('Server running at http://127.0.0.1:52273');
+});
+```
 ## [05월 18일]
 >### 전역 변수
 - 자바스크립트에서 아무런 변수를 선언하지 않고 모든 곳에서 사용할 수 있는 것들을 전역○○이라고 한다.
